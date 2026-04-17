@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Event Action Tree View -->
+    <record id="nyife_event_action_view_tree" model="ir.ui.view">
+        <field name="name">nyife.event.action.tree</field>
+        <field name="model">nyife.event.action</field>
+        <field name="arch" type="xml">
+            <tree string="Event Actions">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="event_type"/>
+                <field name="template_id"/>
+                <field name="phone_field"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Event Action Form View -->
+    <record id="nyife_event_action_view_form" model="ir.ui.view">
+        <field name="name">nyife.event.action.form</field>
+        <field name="model">nyife.event.action</field>
+        <field name="arch" type="xml">
+            <form string="Event Action">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g., Send welcome on new lead"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Event Configuration">
+                            <field name="event_type"/>
+                            <field name="stage_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('event_type', '!=', 'lead_stage_changed')]}"/>
+                            <field name="phone_field"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Template">
+                            <field name="template_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Variable Mappings" name="mappings">
+                            <div class="alert alert-info" role="alert">
+                                <strong>How to map variables:</strong> Each row corresponds to a placeholder in your WhatsApp template
+                                (e.g., <code>{{1}}</code>, <code>{{2}}</code>). Select an Odoo field to dynamically fill the value,
+                                or enter a static value that will be the same for all leads.
+                            </div>
+                            <field name="variable_mapping_ids">
+                                <tree editable="bottom">
+                                    <field name="component_type"/>
+                                    <field name="variable_index"/>
+                                    <field name="odoo_field"/>
+                                    <field name="static_value"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes about this automation..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Event Action Action -->
+    <record id="nyife_event_action_action" model="ir.actions.act_window">
+        <field name="name">Event Actions</field>
+        <field name="res_model">nyife.event.action</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first event action
+            </p>
+            <p>
+                Map a CRM event (e.g., lead created, stage changed) to a WhatsApp template.
+                When the event occurs, a WhatsApp message will be automatically sent to the lead's mobile number.
+            </p>
+        </field>
+    </record>
+
+</odoo>

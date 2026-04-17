@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Message Log Tree View -->
+    <record id="nyife_message_log_view_tree" model="ir.ui.view">
+        <field name="name">nyife.message.log.tree</field>
+        <field name="model">nyife.message.log</field>
+        <field name="arch" type="xml">
+            <tree string="Message Logs" create="0" edit="0">
+                <field name="create_date" string="Sent At"/>
+                <field name="lead_id"/>
+                <field name="phone"/>
+                <field name="template_id"/>
+                <field name="event_action_id"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'sent'"
+                       decoration-warning="status == 'pending'"
+                       decoration-danger="status == 'failed'"/>
+                <field name="message_id"/>
+                <field name="error_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Message Log Form View -->
+    <record id="nyife_message_log_view_form" model="ir.ui.view">
+        <field name="name">nyife.message.log.form</field>
+        <field name="model">nyife.message.log</field>
+        <field name="arch" type="xml">
+            <form string="Message Log" create="0" edit="0">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,sent,failed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="lead_id"/>
+                            <field name="phone"/>
+                            <field name="template_id"/>
+                            <field name="event_action_id"/>
+                        </group>
+                        <group>
+                            <field name="message_id"/>
+                            <field name="create_date" string="Sent At"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Request" name="request">
+                            <field name="payload" readonly="1"/>
+                        </page>
+                        <page string="Response" name="response">
+                            <field name="response" readonly="1"/>
+                        </page>
+                        <page string="Error" name="error" attrs="{'invisible': [('error_message', '=', False)]}">
+                            <field name="error_message" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Message Log Action -->
+    <record id="nyife_message_log_action" model="ir.actions.act_window">
+        <field name="name">Message Logs</field>
+        <field name="res_model">nyife.message.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No messages sent yet
+            </p>
+            <p>
+                WhatsApp message delivery logs will appear here once event actions are triggered.
+            </p>
+        </field>
+    </record>
+
+</odoo>

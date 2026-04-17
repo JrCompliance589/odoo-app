@@ -1,0 +1,155 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan" style="color:#25D366;">Nyife WhatsApp Notifications for CRM</h2>
+            <h3 class="oe_slogan">Automate WhatsApp messages on every CRM event — powered by Nyife</h3>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Overview</h3>
+            <p>
+                Connect your Odoo CRM with <strong>Nyife WhatsApp Business API</strong> to automatically send
+                WhatsApp template messages whenever key events happen on your leads and opportunities.
+            </p>
+            <p>
+                Whether a new lead is created, a stage changes, or a deal is won — your customers get instant
+                WhatsApp notifications with personalized content pulled directly from Odoo.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Supported CRM Events</h3>
+            <ul>
+                <li><strong>Lead Created</strong> — Send a welcome message when a new lead enters the pipeline</li>
+                <li><strong>Stage Changed</strong> — Notify customers when their deal progresses (with per-stage filter)</li>
+                <li><strong>Lead Won</strong> — Send congratulations or next steps when a deal is won</li>
+                <li><strong>Lead Lost</strong> — Follow-up message when a deal is lost</li>
+                <li><strong>Salesperson Assigned</strong> — Introduce the assigned salesperson to the customer</li>
+                <li><strong>Probability Changed</strong> — Update stakeholders on deal likelihood changes</li>
+                <li><strong>Customer Changed</strong> — Notification when the associated partner changes</li>
+                <li><strong>Activity Created</strong> — Alert when a new activity is scheduled on a lead</li>
+                <li><strong>Activity Due Today</strong> — Daily reminders for activities due today</li>
+                <li><strong>Lead Updated</strong> — Catch-all event for any lead modification</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Key Features</h3>
+        </div>
+        <div class="oe_span6">
+            <h4>🔗 Easy Integration</h4>
+            <p>Connect with a single API access token from your Nyife dashboard. Test connectivity instantly.</p>
+
+            <h4>📋 Template Sync</h4>
+            <p>One-click sync of all your approved WhatsApp templates from Nyife. Templates are fetched with all
+               their components, variables, and metadata.</p>
+
+            <h4>🗺️ Dynamic Variable Mapping</h4>
+            <p>Map template placeholders ({{1}}, {{2}}, ...) to any CRM lead field — contact name, email, phone,
+               stage, salesperson, revenue, tags, and 20+ more fields. Or use static values.</p>
+        </div>
+        <div class="oe_span6">
+            <h4>⚡ Automatic Triggers</h4>
+            <p>Configure event-to-template mappings. Messages are sent automatically when events occur — zero manual work.</p>
+
+            <h4>📨 Manual Send</h4>
+            <p>Send WhatsApp messages manually from any lead form via the "Send WhatsApp" action button.</p>
+
+            <h4>📊 Message Logs</h4>
+            <p>Full delivery tracking with request/response payloads, status badges, and error details.
+               View message history per lead with the WhatsApp stat button.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>How to Set Up</h3>
+            <ol>
+                <li><strong>Install the module</strong> in your Odoo instance</li>
+                <li>Go to <strong>Settings → Nyife WhatsApp</strong></li>
+                <li>Enter your <strong>Nyife Instance URL</strong> and <strong>API Access Token</strong></li>
+                <li>Click <strong>Test Connection</strong> to verify credentials</li>
+                <li>Click <strong>Sync Templates</strong> to fetch your approved WhatsApp templates</li>
+                <li>Go to <strong>Nyife WhatsApp → Configuration → Event Actions</strong></li>
+                <li>Create an event action: choose an <strong>event type</strong>, select a <strong>template</strong>,
+                    and <strong>map variables</strong> to Odoo fields</li>
+                <li>Enable the action and you're done! Messages will be sent automatically.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Available Dynamic Variables</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr><th>Variable</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>lead.name</td><td>Lead/Opportunity Name</td></tr>
+                    <tr><td>lead.contact_name</td><td>Contact Name</td></tr>
+                    <tr><td>lead.partner_name</td><td>Company Name</td></tr>
+                    <tr><td>lead.email_from</td><td>Email Address</td></tr>
+                    <tr><td>lead.phone</td><td>Phone Number</td></tr>
+                    <tr><td>lead.mobile</td><td>Mobile Number</td></tr>
+                    <tr><td>lead.expected_revenue</td><td>Expected Revenue</td></tr>
+                    <tr><td>lead.probability</td><td>Win Probability (%)</td></tr>
+                    <tr><td>lead.stage_id.name</td><td>Current Stage</td></tr>
+                    <tr><td>lead.user_id.name</td><td>Assigned Salesperson</td></tr>
+                    <tr><td>lead.team_id.name</td><td>Sales Team</td></tr>
+                    <tr><td>lead.source_id.name</td><td>Lead Source</td></tr>
+                    <tr><td>lead.city</td><td>City</td></tr>
+                    <tr><td>lead.country_id.name</td><td>Country</td></tr>
+                    <tr><td>lead.date_deadline</td><td>Expected Closing Date</td></tr>
+                    <tr><td>lead.create_date</td><td>Creation Date</td></tr>
+                    <tr><td>lead.tag_ids.names</td><td>Tags (comma-separated)</td></tr>
+                    <tr><td>lead.lost_reason_id.name</td><td>Lost Reason</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Requirements</h3>
+            <ul>
+                <li>Odoo 17.0 (Community or Enterprise)</li>
+                <li>CRM module installed</li>
+                <li>A <a href="https://nyife.chat">Nyife</a> account with WhatsApp Business API configured</li>
+                <li>API access token (available in your Nyife dashboard → Settings → API Keys)</li>
+                <li>At least one approved WhatsApp message template</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h3>Support</h3>
+            <p>
+                For questions, issues, or feature requests, please contact us at
+                <a href="mailto:support@nyife.chat">support@nyife.chat</a> or visit
+                <a href="https://nyife.chat">nyife.chat</a>.
+            </p>
+        </div>
+    </div>
+</section>

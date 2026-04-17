@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add WhatsApp message button to CRM Lead form -->
+    <record id="crm_lead_view_form_nyife" model="ir.ui.view">
+        <field name="name">crm.lead.form.nyife</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_nyife_messages"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-whatsapp">
+                    <field name="nyife_message_count" widget="statinfo" string="WhatsApp"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Context action: Send WhatsApp from lead -->
+    <record id="action_nyife_send_whatsapp" model="ir.actions.act_window">
+        <field name="name">Send WhatsApp</field>
+        <field name="res_model">nyife.send.message.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_lead_id': active_id}</field>
+        <field name="binding_model_id" ref="crm.model_crm_lead"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+</odoo>

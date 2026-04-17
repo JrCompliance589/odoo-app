@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nyife_template_user,nyife.template.user,model_nyife_template,crm.group_sale_salesman,1,0,0,0
+access_nyife_template_manager,nyife.template.manager,model_nyife_template,crm.group_sale_manager,1,1,1,1
+access_nyife_event_action_user,nyife.event.action.user,model_nyife_event_action,crm.group_sale_salesman,1,0,0,0
+access_nyife_event_action_manager,nyife.event.action.manager,model_nyife_event_action,crm.group_sale_manager,1,1,1,1
+access_nyife_variable_mapping_user,nyife.variable.mapping.user,model_nyife_variable_mapping,crm.group_sale_salesman,1,0,0,0
+access_nyife_variable_mapping_manager,nyife.variable.mapping.manager,model_nyife_variable_mapping,crm.group_sale_manager,1,1,1,1
+access_nyife_message_log_user,nyife.message.log.user,model_nyife_message_log,crm.group_sale_salesman,1,0,0,0
+access_nyife_message_log_manager,nyife.message.log.manager,model_nyife_message_log,crm.group_sale_manager,1,1,1,0
+access_nyife_send_message_wizard,nyife.send.message.wizard,model_nyife_send_message_wizard,crm.group_sale_salesman,1,1,1,1
+access_nyife_send_message_wizard_line,nyife.send.message.wizard.line,model_nyife_send_message_wizard_line,crm.group_sale_salesman,1,1,1,1

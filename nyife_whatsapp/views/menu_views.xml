@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Root Menu -->
+    <menuitem id="nyife_whatsapp_menu_root"
+              name="Nyife WhatsApp"
+              web_icon="nyife_whatsapp,static/description/icon.png"
+              sequence="100"/>
+
+    <!-- Sub Menus -->
+    <menuitem id="nyife_whatsapp_menu_config"
+              name="Configuration"
+              parent="nyife_whatsapp_menu_root"
+              sequence="10"/>
+
+    <menuitem id="nyife_whatsapp_menu_event_actions"
+              name="Event Actions"
+              parent="nyife_whatsapp_menu_config"
+              action="nyife_event_action_action"
+              sequence="10"/>
+
+    <menuitem id="nyife_whatsapp_menu_templates"
+              name="Templates"
+              parent="nyife_whatsapp_menu_config"
+              action="nyife_template_action"
+              sequence="20"/>
+
+    <menuitem id="nyife_whatsapp_menu_reporting"
+              name="Reporting"
+              parent="nyife_whatsapp_menu_root"
+              sequence="20"/>
+
+    <menuitem id="nyife_whatsapp_menu_message_logs"
+              name="Message Logs"
+              parent="nyife_whatsapp_menu_reporting"
+              action="nyife_message_log_action"
+              sequence="10"/>
+
+    <!-- Settings menu item under Configuration -->
+    <menuitem id="nyife_whatsapp_menu_settings"
+              name="Settings"
+              parent="nyife_whatsapp_menu_config"
+              action="base.action_general_configuration"
+              sequence="99"/>
+
+</odoo>

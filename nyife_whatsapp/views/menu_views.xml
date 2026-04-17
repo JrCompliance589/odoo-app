@@ -3,7 +3,7 @@
 
     <!-- Root Menu -->
     <menuitem id="nyife_whatsapp_menu_root"
-              name="Nyife WhatsApp"
+              name="Nyife Chat"
               web_icon="nyife_whatsapp,static/description/icon.png"
               sequence="100"/>
 

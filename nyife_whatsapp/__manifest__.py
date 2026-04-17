@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Nyife WhatsApp Notifications',
+    'name': 'Nyife Chat Notifications',
     'version': '17.0.1.0.0',
     'category': 'Marketing/WhatsApp',
-    'summary': 'Send WhatsApp notifications on CRM lead events via Nyife',
+    'summary': 'Send WhatsApp notifications on CRM lead events via Nyife Chat',
     'description': """
-Nyife WhatsApp Notifications for Odoo CRM
-==========================================
+Nyife Chat Notifications for Odoo CRM
+======================================
 
 Automatically send WhatsApp template messages to leads on various CRM events:
 

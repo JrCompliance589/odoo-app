@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app data-string="Nyife WhatsApp" string="Nyife WhatsApp" data-key="nyife_whatsapp">
+                <app data-string="Nyife Chat" string="Nyife Chat" data-key="nyife_whatsapp">
                     <block title="Nyife API Configuration" name="nyife_api_settings">
                         <setting string="Enable WhatsApp Notifications" help="Activate automatic WhatsApp notification sending via Nyife">
                             <field name="nyife_enabled"/>

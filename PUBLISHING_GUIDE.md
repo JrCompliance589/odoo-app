@@ -129,8 +129,8 @@ To support Odoo 16.0, 15.0, etc., create separate branches or copies with:
 
 ## Odoo Online (SaaS) Note
 
-This module is prepared for Odoo Online compatibility. If Odoo Apps still shows Odoo Online as unavailable,
-publish a new module package version and request Odoo Apps re-validation.
+Odoo Online does not allow custom modules or modules from the Odoo Apps Store,
+so this module will remain unavailable for Odoo Online in the listing.
 
 Optional fallback for no-addon automation is available via Nyife API bridge:
 

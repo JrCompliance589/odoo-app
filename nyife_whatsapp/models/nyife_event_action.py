@@ -2,7 +2,9 @@
 import json
 import logging
 import re
-import requests
+import socket
+from urllib import error as urlerror
+from urllib import request as urlrequest
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -160,8 +162,6 @@ class NyifeEventAction(models.Model):
 
         # Build template components for API
         template = self.template_id
-        components_data = template.get_components()
-
         # Group variable mappings by component type
         mappings_by_component = {}
         for mapping in self.variable_mapping_ids:
@@ -225,23 +225,35 @@ class NyifeEventAction(models.Model):
         }
 
         try:
-            response = requests.post(url, json=payload, headers=headers, timeout=30)
-            response_data = response.json() if response.content else {}
+            request_body = json.dumps(payload).encode('utf-8')
+            req = urlrequest.Request(url, data=request_body, headers=headers, method='POST')
+            with urlrequest.urlopen(req, timeout=30) as response:
+                status_code = response.getcode()
+                response_text = response.read().decode('utf-8') if response else ''
+
+            response_data = json.loads(response_text) if response_text else {}
             log_vals['response'] = json.dumps(response_data, indent=2)
 
-            if response.status_code == 200 and response_data.get('data', {}).get('success', response_data.get('success', False)):
+            if status_code == 200 and response_data.get('data', {}).get('success', response_data.get('success', False)):
                 log_vals['status'] = 'sent'
                 messages = response_data.get('data', {}).get('data', {}).get('messages', [])
                 if messages:
                     log_vals['message_id'] = messages[0].get('id', '')
             else:
                 log_vals['status'] = 'failed'
-                log_vals['error_message'] = response_data.get('message', f'HTTP {response.status_code}')
+                log_vals['error_message'] = response_data.get('message', f'HTTP {status_code}')
 
-        except requests.exceptions.RequestException as e:
+        except urlerror.HTTPError as exc:
+            response_text = exc.read().decode('utf-8') if exc.fp else ''
+            response_data = json.loads(response_text) if response_text else {}
+            log_vals['response'] = json.dumps(response_data, indent=2) if response_data else ''
             log_vals['status'] = 'failed'
-            log_vals['error_message'] = str(e)
-            _logger.error('Nyife API error for lead %s: %s', lead.id, str(e))
+            log_vals['error_message'] = response_data.get('message', f'HTTP {exc.code}')
+            _logger.error('Nyife API HTTP error for lead %s: %s', lead.id, log_vals['error_message'])
+        except (urlerror.URLError, socket.timeout, ValueError) as exc:
+            log_vals['status'] = 'failed'
+            log_vals['error_message'] = str(exc)
+            _logger.error('Nyife API error for lead %s: %s', lead.id, str(exc))
 
         self.env['nyife.message.log'].sudo().create(log_vals)
         return log_vals.get('status') == 'sent'

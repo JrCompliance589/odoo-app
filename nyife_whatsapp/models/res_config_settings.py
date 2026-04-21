@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
-import requests
+import socket
+from urllib import error as urlerror
+from urllib import parse as urlparse
+from urllib import request as urlrequest
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -44,8 +47,11 @@ class ResConfigSettings(models.TransientModel):
         }
 
         try:
-            response = requests.get(url, headers=headers, timeout=15)
-            if response.status_code == 200:
+            req = urlrequest.Request(url, headers=headers, method='GET')
+            with urlrequest.urlopen(req, timeout=15) as response:
+                status_code = response.getcode()
+
+            if status_code == 200:
                 return {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',
@@ -58,12 +64,14 @@ class ResConfigSettings(models.TransientModel):
                 }
             else:
                 raise UserError(
-                    _('Connection failed. Status: %s. Please verify your URL and token.') % response.status_code
+                    _('Connection failed. Status: %s. Please verify your URL and token.') % status_code
                 )
-        except requests.exceptions.ConnectionError:
+        except urlerror.HTTPError as exc:
+            raise UserError(
+                _('Connection failed. Status: %s. Please verify your URL and token.') % exc.code
+            )
+        except (urlerror.URLError, socket.timeout):
             raise UserError(_('Could not connect to %s. Please verify the URL.') % api_url)
-        except requests.exceptions.Timeout:
-            raise UserError(_('Connection timed out. Please try again.'))
 
     def action_sync_nyife_templates(self):
         """Fetch templates from Nyife API and sync them locally."""
@@ -86,11 +94,16 @@ class ResConfigSettings(models.TransientModel):
 
         try:
             while True:
-                response = requests.get(url, headers=headers, params={'page': page, 'per_page': 100}, timeout=30)
-                if response.status_code != 200:
-                    raise UserError(_('Failed to fetch templates. Status: %s') % response.status_code)
+                query = urlparse.urlencode({'page': page, 'per_page': 100})
+                req = urlrequest.Request(f"{url}?{query}", headers=headers, method='GET')
+                with urlrequest.urlopen(req, timeout=30) as response:
+                    status_code = response.getcode()
+                    response_text = response.read().decode('utf-8') if response else ''
 
-                data = response.json()
+                if status_code != 200:
+                    raise UserError(_('Failed to fetch templates. Status: %s') % status_code)
+
+                data = json.loads(response_text) if response_text else {}
                 templates = data.get('data', [])
                 if not templates:
                     break
@@ -103,8 +116,10 @@ class ResConfigSettings(models.TransientModel):
                     break
                 page += 1
 
-        except requests.exceptions.RequestException as e:
-            raise UserError(_('Error fetching templates: %s') % str(e))
+        except urlerror.HTTPError as exc:
+            raise UserError(_('Failed to fetch templates. Status: %s') % exc.code)
+        except (urlerror.URLError, socket.timeout, ValueError) as exc:
+            raise UserError(_('Error fetching templates: %s') % str(exc))
 
         template_model = self.env['nyife.template']
         synced = 0

@@ -127,6 +127,16 @@ To support Odoo 16.0, 15.0, etc., create separate branches or copies with:
 - API compatibility adjustments (e.g., `attrs` vs `invisible` attribute syntax)
 - Each version is submitted as a separate module on the app store
 
+## Odoo Online (SaaS) Note
+
+This module is prepared for Odoo Online compatibility. If Odoo Apps still shows Odoo Online as unavailable,
+publish a new module package version and request Odoo Apps re-validation.
+
+Optional fallback for no-addon automation is available via Nyife API bridge:
+
+- `GET /api/odoo-online/templates`
+- `POST /api/odoo-online/send-template`
+
 ## Pricing Options
 
 - **Free**: Great for adoption. Users get the module for free, you monetize through Nyife subscriptions.

@@ -36,11 +36,46 @@ Automatically send WhatsApp template messages on CRM lead events via the Nyife W
 - API access token
 - Approved WhatsApp message templates
 
+## Odoo Online Support (Without Custom Module)
+
+Odoo Online does not allow installing custom Python addons. To support Odoo Online,
+use the Nyife bridge API endpoints from automated actions/webhooks:
+
+- `GET /api/odoo-online/templates`
+- `POST /api/odoo-online/send-template`
+
+Both endpoints require `Authorization: Bearer <nyife_api_token>`.
+
+### Example: Send Template From Odoo Online
+
+Use Odoo Automation/Webhook to send JSON similar to:
+
+```json
+{
+  "phone": "{{record.mobile or record.phone}}",
+  "first_name": "{{record.contact_name}}",
+  "email": "{{record.email_from}}",
+  "template_name": "lead_created",
+  "language": "en",
+  "variables": {
+    "1": "{{record.name}}",
+    "2": "{{record.stage_id.name}}"
+  }
+}
+```
+
+Notes:
+
+- `variables` maps to body placeholders (`{{1}}`, `{{2}}`, ...).
+- Optional `header_variables` can be sent for header placeholders.
+- The bridge endpoint forwards to Nyife's existing send-template flow so billing,
+  template checks, subscription checks, and WhatsApp connection validation remain enforced.
+
 ## License
 
 LGPL-3
 
 ## Support
 
-- Email: support@nyife.chat
-- Website: https://nyife.chat
+- Email: [support@nyife.chat](mailto:support@nyife.chat)
+- Website: [https://nyife.chat](https://nyife.chat)
